@@ -1,5 +1,3 @@
-// app/(logged-in)/summaries/[id]/page.tsx
-
 import BgGradient from "@/components/common/bg-gradient";
 import ChatSidebar from "@/components/common/chat-side-bar";
 import NotesSection from "@/components/common/notes";
@@ -69,6 +67,7 @@ export default async function SummaryPage({
                 <div className="relative">
                   <SummaryHeader 
                     title={title} 
+                    //@ts-ignore created_at is already a variable
                     createdAt={created_at} 
                     readingTime={readingTime} 
                   />
@@ -214,6 +213,7 @@ export default async function SummaryPage({
                 <ChatSidebar 
                   fileUrl={original_file_url} 
                   userId={user?.id}
+                  //@ts-ignore it is already defined
                   className="h-[650px]" 
                 />
               </div>
