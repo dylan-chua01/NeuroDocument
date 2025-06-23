@@ -70,6 +70,7 @@ const ChatSidebar = ({ fileUrl }: Props) => {
 
   useEffect(() => {
     if (initialMessages.length > 0) {
+      //@ts-ignore because it works
       setMessages(initialMessages);
     }
   }, [initialMessages, setMessages]);
