@@ -14,9 +14,10 @@ import { Suspense } from "react";
 export default async function SummaryPage({ 
   params 
 }: { 
-  params: { id: string } 
+  params: Promise<{ id: string }> // Updated type to Promise
 }) {
-  const { id } = params;
+  // Await the params since it's now a Promise
+  const { id } = await params;
   const summary = await getSummaryById(id);
   const user = await currentUser();
   
@@ -67,7 +68,7 @@ export default async function SummaryPage({
                 <div className="relative">
                   <SummaryHeader 
                     title={title} 
-                    //@ts-ignore created_at is already a variable
+                    //@ts-ignore ignore this error
                     createdAt={created_at} 
                     readingTime={readingTime} 
                   />
@@ -213,7 +214,7 @@ export default async function SummaryPage({
                 <ChatSidebar 
                   fileUrl={original_file_url} 
                   userId={user?.id}
-                  //@ts-ignore it is already defined
+                  //@ts-ignore ignore this error
                   className="h-[650px]" 
                 />
               </div>
