@@ -4,12 +4,15 @@ import { generateQuestions } from "@/lib/geminiai";
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    // Await the params since they're now a Promise in newer Next.js versions
+    const { id } = await params;
+    
     const sql = await getDbConnection();
     const [summary] = await sql`
-      SELECT title, summary_text FROM pdf_summaries WHERE id = ${params.id}
+      SELECT title, summary_text FROM pdf_summaries WHERE id = ${id}
     `;
 
     if (!summary) {
@@ -30,9 +33,13 @@ export async function GET(
 
     // Validate questions before returning
     const validQuestions = questions.filter(q => 
+      //@ts-ignore ignore the q error
       q.question && 
+      //@ts-ignore ignore the q error
       q.question.trim() !== '' && 
+      //@ts-ignore ignore the q error
       q.answer && 
+      //@ts-ignore ignore the q error
       q.answer.trim() !== ''
     );
 
