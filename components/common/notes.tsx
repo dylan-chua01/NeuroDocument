@@ -1,9 +1,8 @@
-// components/common/notes.tsx
-'use client';
+"use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Save, Expand, Shrink, Trash2, History } from "lucide-react";
+import { Save, Expand, Shrink, Trash2 } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import { useDebounce } from "use-debounce";
 import { toast } from "sonner";
@@ -20,6 +19,27 @@ const NotesSection = ({ fileUrl, userId, className }: NotesSectionProps) => {
   const [saving, setSaving] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [debouncedNotes] = useDebounce(notes, 2000); // Auto-save after 2s inactivity
+
+  // Save notes
+  const handleSave = useCallback(async () => {
+    setSaving(true);
+    try {
+      const res = await fetch("/api/save-notes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fileUrl, userId, notes }),
+      });
+
+      if (!res.ok) throw new Error("Failed to save notes");
+
+      toast.success("Notes saved successfully");
+    } catch (err) {
+      toast.error("Failed to save notes");
+      console.error(err);
+    } finally {
+      setSaving(false);
+    }
+  }, [fileUrl, userId, notes]);
 
   // Fetch saved notes
   useEffect(() => {
@@ -43,33 +63,12 @@ const NotesSection = ({ fileUrl, userId, className }: NotesSectionProps) => {
     fetchNotes();
   }, [fileUrl, userId]);
 
-  // Auto-save when debounced notes change
+  // Auto-save on debounced input
   useEffect(() => {
     if (debouncedNotes && debouncedNotes !== notes) {
       handleSave();
     }
-  }, [debouncedNotes]);
-
-  // Save notes
-  const handleSave = async () => {
-    setSaving(true);
-    try {
-      const res = await fetch("/api/save-notes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fileUrl, userId, notes }),
-      });
-
-      if (!res.ok) throw new Error("Failed to save notes");
-      
-      toast.success("Notes saved successfully");
-    } catch (err) {
-      toast.error("Failed to save notes");
-      console.error(err);
-    } finally {
-      setSaving(false);
-    }
-  };
+  }, [debouncedNotes, handleSave, notes]);
 
   const clearNotes = () => {
     setNotes("");
@@ -87,7 +86,11 @@ const NotesSection = ({ fileUrl, userId, className }: NotesSectionProps) => {
             onClick={() => setIsExpanded(!isExpanded)}
             title={isExpanded ? "Collapse" : "Expand"}
           >
-            {isExpanded ? <Shrink className="w-4 h-4" /> : <Expand className="w-4 h-4" />}
+            {isExpanded ? (
+              <Shrink className="w-4 h-4" />
+            ) : (
+              <Expand className="w-4 h-4" />
+            )}
           </Button>
           <Button
             variant="ghost"
@@ -103,11 +106,17 @@ const NotesSection = ({ fileUrl, userId, className }: NotesSectionProps) => {
             disabled={saving}
             className="gap-1"
           >
-            {saving ? "Saving..." : <><Save className="w-4 h-4" /> Save</>}
+            {saving ? (
+              "Saving..."
+            ) : (
+              <>
+                <Save className="w-4 h-4" /> Save
+              </>
+            )}
           </Button>
         </div>
       </div>
-      
+
       <Textarea
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
@@ -118,12 +127,13 @@ const NotesSection = ({ fileUrl, userId, className }: NotesSectionProps) => {
           isExpanded ? "min-h-[400px]" : "min-h-[200px]"
         }`}
       />
-      
+
       <div className="mt-2 flex justify-between items-center text-sm text-gray-500">
         <div>
           {notes.length > 0 && (
             <span>
-              {notes.length} characters • {notes.split(/\s+/).filter(Boolean).length} words
+              {notes.length} characters •{" "}
+              {notes.split(/\s+/).filter(Boolean).length} words
             </span>
           )}
         </div>

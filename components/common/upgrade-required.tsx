@@ -1,4 +1,4 @@
-import { ArrowRight, Sparkles, Zap, Lock, Check, Crown } from "lucide-react";
+import { ArrowRight, Sparkles, Lock, Check, Crown } from "lucide-react";
 import BgGradient from "./bg-gradient";
 import { Button } from "../ui/button";
 import Link from "next/link";
@@ -9,11 +9,11 @@ export default function UpgradeRequired() {
     <div className="relative min-h-[60vh] flex items-center">
       {/* Cathay-themed background gradient */}
       <BgGradient className="from-[#006747]/10 via-[#007A53]/10 to-[#008D5E]/10" />
-      
+
       {/* Floating decorative elements */}
       <div className="absolute top-1/4 left-1/4 w-4 h-4 rounded-full bg-[#006747]/20 blur-sm animate-float"></div>
       <div className="absolute top-1/3 right-1/3 w-3 h-3 rounded-full bg-[#008D5E]/30 blur-sm animate-float-delay"></div>
-      
+
       <div className="container px-4 py-16">
         <div className="flex flex-col items-center justify-center gap-10 text-center max-w-3xl mx-auto">
           {/* Premium badge */}
@@ -24,14 +24,19 @@ export default function UpgradeRequired() {
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#006747]/10 text-[#006747] border border-[#006747]/20"
           >
             <Crown className="w-5 h-5 fill-amber-500 stroke-[#006747]" />
-            <span className="text-sm font-medium uppercase tracking-wider">Premium Exclusive</span>
+            <span className="text-sm font-medium uppercase tracking-wider">
+              Premium Exclusive
+            </span>
           </MotionDiv>
 
           {/* Headline */}
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900">
-            Unlock <span className="bg-gradient-to-r from-[#006747] to-[#008D5E] bg-clip-text text-transparent">NeuroDoc</span>
+            Unlock{" "}
+            <span className="bg-gradient-to-r from-[#006747] to-[#008D5E] bg-clip-text text-transparent">
+              NeuroDoc
+            </span>
           </h1>
-          
+
           {/* Benefit-focused message */}
           <MotionP
             initial={{ y: 20, opacity: 0 }}
@@ -39,7 +44,8 @@ export default function UpgradeRequired() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-xl leading-8 text-gray-600 max-w-2xl"
           >
-            Upgrade to summarise your <span className="font-semibold text-[#006747]">first PDF.</span> 
+            Upgrade to summarise your{" "}
+            <span className="font-semibold text-[#006747]">first PDF.</span>
           </MotionP>
 
           {/* Value pillars */}
@@ -47,16 +53,16 @@ export default function UpgradeRequired() {
             {[
               {
                 icon: <Sparkles className="w-5 h-5 text-[#006747]" />,
-                text: "Priority processing"
+                text: "Priority processing",
               },
               {
                 icon: <Lock className="w-5 h-5 text-[#006747]" />,
-                text: "Advanced security"
+                text: "Advanced security",
               },
               {
                 icon: <Check className="w-5 h-5 text-[#006747]" />,
-                text: "Unlimited access"
-              }
+                text: "Unlimited access",
+              },
             ].map((item, index) => (
               <MotionDiv
                 key={index}
@@ -90,7 +96,7 @@ export default function UpgradeRequired() {
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
-            
+
             <Button
               variant="outline"
               size="lg"
@@ -101,10 +107,8 @@ export default function UpgradeRequired() {
               </Link>
             </Button>
           </MotionDiv>
-
-          
         </div>
       </div>
     </div>
-  )
+  );
 }

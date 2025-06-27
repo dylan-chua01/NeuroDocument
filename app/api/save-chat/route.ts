@@ -1,35 +1,33 @@
-import { NextResponse } from 'next/server';
-import { neon } from '@neondatabase/serverless';
-import { auth, currentUser } from '@clerk/nextjs/server';
+import { NextResponse } from "next/server";
+import { neon } from "@neondatabase/serverless";
+import { currentUser } from "@clerk/nextjs/server";
 
 const sql = neon(process.env.DATABASE_URL!);
 
 export async function POST(req: Request) {
   try {
     const user = await currentUser();
-    
+
     const { fileUrl, question, answer, sources } = await req.json();
 
     // Validate inputs
     if (!fileUrl || !question || !answer) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
     // Properly format and validate sources
     let formattedSources = [];
     try {
       formattedSources = Array.isArray(sources) ? sources : [];
+
       // Ensure each source has required fields
-      formattedSources = formattedSources.map(source => ({
+      formattedSources = formattedSources.map((source) => ({
         page: source.page || 1,
-        content: source.content || '',
-        ...source // Include any additional fields
+        content: source.content || "",
+        ...source,
       }));
     } catch (e) {
-      console.warn('Invalid sources format, using empty array', e);
+      console.warn("Invalid sources format, using empty array", e);
       formattedSources = [];
     }
 
@@ -49,24 +47,26 @@ export async function POST(req: Request) {
         ${JSON.stringify(formattedSources)}::jsonb,
         ${user?.id || null}
       )
-      RETURNING id
+      RETURNING id;
     `;
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
-      chatId: result[0]?.id 
+      chatId: result[0]?.id,
     });
-
   } catch (error) {
-    console.error('Database operation failed:', error);
+    console.error("Database operation failed:", error);
     return NextResponse.json(
-      { 
+      {
         error: "Failed to save chat",
-        details: process.env.NODE_ENV === 'development' 
-          ? error instanceof Error ? error.message : String(error)
-          : undefined
+        details:
+          process.env.NODE_ENV === "development"
+            ? error instanceof Error
+              ? error.message
+              : String(error)
+            : undefined,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

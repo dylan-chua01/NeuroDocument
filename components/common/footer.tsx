@@ -1,4 +1,4 @@
-import { Github, Twitter, Linkedin, Mail, Pizza } from "lucide-react";
+import { Pizza } from "lucide-react";
 import Link from "next/link";
 
 export function Footer() {
@@ -26,17 +26,21 @@ export function Footer() {
             </h4>
             <ul className="space-y-3">
               <li>
-                <Link href="#how-it-works" className="text-gray-600 hover:text-rose-500 transition">
+                <Link
+                  href="#how-it-works"
+                  className="text-gray-600 hover:text-rose-500 transition"
+                >
                   How it works
                 </Link>
               </li>
               <li>
-                <Link href="/#pricing" className="text-gray-600 hover:text-rose-500 transition">
+                <Link
+                  href="/#pricing"
+                  className="text-gray-600 hover:text-rose-500 transition"
+                >
                   Pricing
                 </Link>
               </li>
-             
-              
             </ul>
           </div>
 
@@ -47,12 +51,18 @@ export function Footer() {
             </h4>
             <ul className="space-y-3">
               <li>
-                <Link href="#" className="text-gray-600 hover:text-rose-500 transition">
+                <Link
+                  href="#"
+                  className="text-gray-600 hover:text-rose-500 transition"
+                >
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-gray-600 hover:text-rose-500 transition">
+                <Link
+                  href="/contact"
+                  className="text-gray-600 hover:text-rose-500 transition"
+                >
                   Support
                 </Link>
               </li>
@@ -66,22 +76,34 @@ export function Footer() {
             </h4>
             <ul className="space-y-3">
               <li>
-                <Link href="#" className="text-gray-600 hover:text-rose-500 transition">
+                <Link
+                  href="#"
+                  className="text-gray-600 hover:text-rose-500 transition"
+                >
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-gray-600 hover:text-rose-500 transition">
+                <Link
+                  href="#"
+                  className="text-gray-600 hover:text-rose-500 transition"
+                >
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-gray-600 hover:text-rose-500 transition">
+                <Link
+                  href="#"
+                  className="text-gray-600 hover:text-rose-500 transition"
+                >
                   Security
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-gray-600 hover:text-rose-500 transition">
+                <Link
+                  href="#"
+                  className="text-gray-600 hover:text-rose-500 transition"
+                >
                   Compliance
                 </Link>
               </li>
@@ -95,13 +117,22 @@ export function Footer() {
             © {new Date().getFullYear()} Neurodoc AI. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link href="#" className="text-gray-500 hover:text-gray-700 text-sm">
+            <Link
+              href="#"
+              className="text-gray-500 hover:text-gray-700 text-sm"
+            >
               Cookie Policy
             </Link>
-            <Link href="#" className="text-gray-500 hover:text-gray-700 text-sm">
+            <Link
+              href="#"
+              className="text-gray-500 hover:text-gray-700 text-sm"
+            >
               GDPR
             </Link>
-            <Link href="#" className="text-gray-500 hover:text-gray-700 text-sm">
+            <Link
+              href="#"
+              className="text-gray-500 hover:text-gray-700 text-sm"
+            >
               Status
             </Link>
           </div>

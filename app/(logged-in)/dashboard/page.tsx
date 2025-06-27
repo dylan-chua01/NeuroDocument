@@ -13,16 +13,16 @@ import { MotionDiv } from "@/components/common/motion-wrapper";
 export default async function DashboardPage() {
   const user = await currentUser();
   const userId = user?.id;
-  if(!userId) return redirect('/sign-in');
-  
+  if (!userId) return redirect("/sign-in");
+
   const { hasReachedLimit, uploadLimit } = await hasReachedUploadLimit(userId);
   const summaries = await getSummaries(userId);
-  
+
   return (
     <main className="min-h-screen pb-16">
       {/* Background with subtle gradient */}
-      <BgGradient className="from-[#006747]/5 via-white to-gray-50"/>
-      
+      <BgGradient className="from-[#006747]/5 via-white to-gray-50" />
+
       {/* Header Section */}
       <div className="relative py-12 mb-6 bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
         <div className="container mx-auto px-4">
@@ -41,31 +41,32 @@ export default async function DashboardPage() {
                 Your Summaries
               </h1>
               <p className="text-gray-600">
-                Transform your documents into concise, actionable insights for better productivity
+                Transform your documents into concise, actionable insights for
+                better productivity
               </p>
             </MotionDiv>
-            
+
             {!hasReachedLimit && (
               <MotionDiv
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
-                <Button 
+                <Button
                   size="lg"
                   className="bg-gradient-to-r from-[#006747] to-[#008D5E] hover:shadow-lg hover:shadow-[#006747]/20 text-white transition-all duration-300 group"
                 >
                   <Link href="/upload" className="flex items-center text-white">
                     <Plus className="w-5 h-5 mr-2" />
                     New Summary
-                  </Link>    
+                  </Link>
                 </Button>
               </MotionDiv>
             )}
           </div>
         </div>
       </div>
-      
+
       {/* Main Content */}
       <div className="container mx-auto px-4">
         {/* Upload Limit Warning */}
@@ -81,12 +82,15 @@ export default async function DashboardPage() {
                 <Info className="w-5 h-5 text-amber-500" />
               </div>
               <div>
-                <h3 className="font-medium text-amber-800 mb-1">Upload Limit Reached</h3>
+                <h3 className="font-medium text-amber-800 mb-1">
+                  Upload Limit Reached
+                </h3>
                 <p className="text-sm text-amber-700">
-                  You've reached the limit of {uploadLimit} uploads on the Basic plan.
+                  You&apos;ve reached the limit of {uploadLimit} uploads on the
+                  Basic plan.
                 </p>
-                <Link 
-                  href="/#pricing" 
+                <Link
+                  href="/#pricing"
                   className="mt-3 inline-flex items-center text-sm font-medium text-[#006747] hover:text-[#008D5E] transition-colors"
                 >
                   Upgrade to Pro for unlimited uploads
@@ -96,9 +100,7 @@ export default async function DashboardPage() {
             </div>
           </MotionDiv>
         )}
-        
-        
-        
+
         {/* Summaries Grid */}
         {summaries.length === 0 ? (
           <EmptySummaryState />
@@ -122,15 +124,24 @@ export default async function DashboardPage() {
             </div>
           </MotionDiv>
         )}
-        
+
         {/* Pagination (if needed) */}
         {summaries.length > 9 && (
           <div className="mt-10 flex justify-center">
             <nav className="flex items-center gap-1">
-              <Button variant="outline" size="sm" disabled className="w-8 h-8 p-0">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled
+                className="w-8 h-8 p-0"
+              >
                 &lt;
               </Button>
-              <Button variant="outline" size="sm" className="w-8 h-8 p-0 bg-[#006747]/10 text-[#006747] border-[#006747]/20">
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-8 h-8 p-0 bg-[#006747]/10 text-[#006747] border-[#006747]/20"
+              >
                 1
               </Button>
               <Button variant="outline" size="sm" className="w-8 h-8 p-0">
